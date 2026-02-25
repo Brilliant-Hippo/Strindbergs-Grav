@@ -278,90 +278,67 @@
       </div>
     </div>
     <script>
-      const modal = document.getElementById("service-modal");
-      const modalTitle = modal.querySelector(".modal-title");
-      const modalText = modal.querySelector(".modal-text");
-      const modalMedia = modal.querySelector(".modal-media");
-      const modalPrev = modal.querySelector(".modal-prev");
-      const modalNext = modal.querySelector(".modal-next");
-      let modalImages = [];
-      let modalIndex = 0;
+     
 
-      const setModalImage = (index) => {
-        if (!modalImages.length) {
-          modalMedia.style.backgroundImage = "";
-          return;
-        }
-        const safeIndex = ((index % modalImages.length) + modalImages.length) % modalImages.length;
-        modalIndex = safeIndex;
-        modalMedia.style.backgroundImage = `url("${modalImages[modalIndex]}")`;
-        const showNav = modalImages.length > 1;
-        modalPrev.disabled = !showNav;
-        modalNext.disabled = !showNav;
-        modalPrev.hidden = !showNav;
-        modalNext.hidden = !showNav;
-        modalMedia.classList.toggle("single-image", !showNav);
-      };
+       // Submit JSON Form Handler - Corrected version
+    const contactForm = document.getElementById("contact-form");
+    if (contactForm) {
+      const statusEl = contactForm.querySelector(".form-status");
+      const submitBtn = contactForm.querySelector(".contact-form-submit");
 
-      const openModal = (trigger) => {
-        const card = trigger.closest(".service-card");
-        const full = card.querySelector(".service-full");
-        modalTitle.textContent = trigger.dataset.title;
-        modalText.innerHTML = full ? full.innerHTML : "";
-        modal.classList.toggle("is-lattrivning", trigger.dataset.key === "lattrivning");
-        const gallery = (trigger.dataset.gallery || "")
-          .split(",")
-          .map((item) => item.trim())
-          .filter(Boolean);
-        modalImages = gallery.length ? gallery : [trigger.dataset.image].filter(Boolean);
-        setModalImage(0);
-        modal.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-        document.body.classList.add("modal-open");
-      };
+      contactForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!statusEl) return;
 
-      const closeModal = () => {
-        modal.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
-        document.body.classList.remove("modal-open");
-      };
+        statusEl.textContent = "Skickar...";
+        submitBtn.disabled = true;
 
-      document.querySelectorAll(".service-trigger").forEach((button) => {
-        button.addEventListener("click", () => openModal(button));
-      });
+        try {
+          // Collect form data
+          const formData = new FormData(contactForm);
 
-      const contactForm = document.querySelector(".contact-form");
-      if (contactForm) {
-        const statusEl = contactForm.querySelector(".form-status");
-        const submitBtn = contactForm.querySelector(".contact-form-submit");
-
-        contactForm.addEventListener("submit", async (event) => {
-          event.preventDefault();
-          if (!statusEl) return;
-
-          statusEl.textContent = "Skickar...";
-          submitBtn.disabled = true;
-
-          try {
-            const formData = new FormData(contactForm);
-            const response = await fetch(contactForm.action, {
-              method: "POST",
-              body: formData,
-            });
-
-            if (response.ok) {
-              statusEl.textContent = "Tack! Vi återkommer så snart vi kan.";
-              contactForm.reset();
-            } else {
-              statusEl.textContent = "Något gick fel. Försök igen.";
+          // Build the data object from form fields (skip honeypot)
+          const formFields = {};
+          formData.forEach((value, key) => {
+            if (key !== 'botcheck') {
+              formFields[key] = value;
             }
-          } catch (error) {
-            statusEl.textContent = "Något gick fel. Försök igen.";
-          } finally {
-            submitBtn.disabled = false;
+          });
+
+          // Submit JSON expects the data wrapped in a "data" property
+          const payload = {
+            data: formFields
+          };
+
+          // Send to Submit JSON with API key
+          const response = await fetch('https://api.submitjson.com/v1/submit/GDB6qpg2m', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-API-Key': 'sjk_3ef5ee8b7b284eb9905f0c59286ae8b3'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            statusEl.textContent = "Tack! Vi återkommer så snart vi kan.";
+            contactForm.reset();
+          } else {
+            statusEl.textContent = result.message || "Något gick fel. Försök igen.";
           }
-        });
-      }
+        } catch (error) {
+          console.error('Form submission error:', error);
+          statusEl.textContent = "Nätverksfel. Kontrollera din anslutning och försök igen.";
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+    }
+
+
 
       const navToggle = document.querySelector(".nav-toggle");
       const navLinks = document.querySelector(".nav-links");
