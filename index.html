@@ -364,28 +364,58 @@
       const modalPrev = modal ? modal.querySelector(".modal-prev") : null;
       const modalNext = modal ? modal.querySelector(".modal-next") : null;
 
+      const normalizeImagePath = (path) => encodeURI(path.replace(/\\/g, "/").trim());
+      const imageCache = new Map();
       let modalImages = [];
       let modalIndex = 0;
 
-      const setModalImage = (index) => {
+      const loadImage = (src) => {
+        if (imageCache.has(src)) return imageCache.get(src);
+        const promise = new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(src);
+          img.onerror = reject;
+          img.src = src;
+        });
+        imageCache.set(src, promise);
+        return promise;
+      };
+
+      const setModalImage = async (index) => {
         if (!modalMedia || modalImages.length === 0) return;
         modalIndex = (index + modalImages.length) % modalImages.length;
-        modalMedia.style.backgroundImage = `url('${modalImages[modalIndex]}')`;
+        const nextSrc = modalImages[modalIndex];
+        modalMedia.classList.add("is-loading");
+        if (modalPrev) modalPrev.disabled = true;
+        if (modalNext) modalNext.disabled = true;
+        try {
+          await loadImage(nextSrc);
+          modalMedia.style.backgroundImage = `url('${nextSrc}')`;
+        } finally {
+          modalMedia.classList.remove("is-loading");
+          if (modalPrev) modalPrev.disabled = false;
+          if (modalNext) modalNext.disabled = false;
+        }
       };
 
       const openModal = ({ title, text, images }) => {
         if (!modal || !modalTitle || !modalText) return;
-        modalImages = images && images.length ? images : [];
+        modalImages = images && images.length ? images.map(normalizeImagePath) : [];
         modalTitle.textContent = title || "";
         modalText.textContent = text || "";
         if (modalImages.length && modalMedia) {
+          modalImages.forEach((src) => {
+            loadImage(src).catch(() => {});
+          });
           setModalImage(0);
           modalPrev.hidden = modalImages.length < 2;
           modalNext.hidden = modalImages.length < 2;
+          modalMedia.classList.toggle("single-image", modalImages.length < 2);
         } else if (modalMedia) {
           modalMedia.style.backgroundImage = "";
           modalPrev.hidden = true;
           modalNext.hidden = true;
+          modalMedia.classList.add("single-image");
         }
         modal.setAttribute("aria-hidden", "false");
         document.body.classList.add("modal-open");
