@@ -404,13 +404,14 @@
         modalTitle.textContent = title || "";
         modalText.textContent = text || "";
         if (modalImages.length && modalMedia) {
+          const hasMultiple = modalImages.length > 1;
           modalImages.forEach((src) => {
             loadImage(src).catch(() => {});
           });
           setModalImage(0);
-          modalPrev.hidden = modalImages.length < 2;
-          modalNext.hidden = modalImages.length < 2;
-          modalMedia.classList.toggle("single-image", modalImages.length < 2);
+          modalPrev.hidden = !hasMultiple;
+          modalNext.hidden = !hasMultiple;
+          modalMedia.classList.toggle("single-image", !hasMultiple);
         } else if (modalMedia) {
           modalMedia.style.backgroundImage = "";
           modalPrev.hidden = true;
@@ -425,6 +426,8 @@
         if (!modal) return;
         modal.setAttribute("aria-hidden", "true");
         document.body.classList.remove("modal-open");
+        modalImages = [];
+        modalIndex = 0;
       };
 
       document.querySelectorAll(".service-trigger").forEach((button) => {
