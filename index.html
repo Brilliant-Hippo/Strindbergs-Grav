@@ -357,31 +357,88 @@
         });
       }
 
-      modal.addEventListener("click", (event) => {
-        if (event.target.dataset.close) {
-          closeModal();
+      const modal = document.getElementById("service-modal");
+      const modalTitle = modal ? modal.querySelector(".modal-title") : null;
+      const modalText = modal ? modal.querySelector(".modal-text") : null;
+      const modalMedia = modal ? modal.querySelector(".modal-media") : null;
+      const modalPrev = modal ? modal.querySelector(".modal-prev") : null;
+      const modalNext = modal ? modal.querySelector(".modal-next") : null;
+
+      let modalImages = [];
+      let modalIndex = 0;
+
+      const setModalImage = (index) => {
+        if (!modalMedia || modalImages.length === 0) return;
+        modalIndex = (index + modalImages.length) % modalImages.length;
+        modalMedia.style.backgroundImage = `url('${modalImages[modalIndex]}')`;
+      };
+
+      const openModal = ({ title, text, images }) => {
+        if (!modal || !modalTitle || !modalText) return;
+        modalImages = images && images.length ? images : [];
+        modalTitle.textContent = title || "";
+        modalText.textContent = text || "";
+        if (modalImages.length && modalMedia) {
+          setModalImage(0);
+          modalPrev.hidden = modalImages.length < 2;
+          modalNext.hidden = modalImages.length < 2;
+        } else if (modalMedia) {
+          modalMedia.style.backgroundImage = "";
+          modalPrev.hidden = true;
+          modalNext.hidden = true;
         }
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+      };
+
+      const closeModal = () => {
+        if (!modal) return;
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+      };
+
+      document.querySelectorAll(".service-trigger").forEach((button) => {
+        button.addEventListener("click", () => {
+          const card = button.closest(".service-card");
+          const full = card ? card.querySelector(".service-full") : null;
+          const title = button.dataset.title || button.textContent.trim();
+          const text = full ? full.textContent.trim() : "";
+          const baseImage = button.dataset.image ? [button.dataset.image] : [];
+          const gallery = button.dataset.gallery
+            ? button.dataset.gallery.split(",").map((item) => item.trim()).filter(Boolean)
+            : [];
+          const images = gallery.length ? gallery : baseImage;
+          openModal({ title, text, images });
+        });
       });
 
-      modalPrev.addEventListener("click", () => {
-        setModalImage(modalIndex - 1);
-      });
-
-      modalNext.addEventListener("click", () => {
-        setModalImage(modalIndex + 1);
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (modal.getAttribute("aria-hidden") === "false") {
-          if (event.key === "Escape") {
+      if (modal && modalPrev && modalNext) {
+        modal.addEventListener("click", (event) => {
+          if (event.target.dataset.close) {
             closeModal();
-          } else if (event.key === "ArrowLeft") {
-            setModalImage(modalIndex - 1);
-          } else if (event.key === "ArrowRight") {
-            setModalImage(modalIndex + 1);
           }
-        }
-      });
+        });
+
+        modalPrev.addEventListener("click", () => {
+          setModalImage(modalIndex - 1);
+        });
+
+        modalNext.addEventListener("click", () => {
+          setModalImage(modalIndex + 1);
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (modal.getAttribute("aria-hidden") === "false") {
+            if (event.key === "Escape") {
+              closeModal();
+            } else if (event.key === "ArrowLeft") {
+              setModalImage(modalIndex - 1);
+            } else if (event.key === "ArrowRight") {
+              setModalImage(modalIndex + 1);
+            }
+          }
+        });
+      }
     </script>
   </body>
 </html>
