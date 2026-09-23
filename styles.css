@@ -1445,3 +1445,52 @@ p {
     margin: 8px 0;
   }
 }
+/* ===== MOBILE MENU FIX ===== */
+
+@media (max-width: 700px) {
+
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: auto;
+    min-height: 0;
+
+    margin: 0;
+    padding: 14px;
+
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+
+    background: rgba(245, 245, 245, 0.98);
+    border: 2px solid #292522;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+
+    z-index: 999;
+  }
+
+  .nav-links.open,
+  .nav-links.is-open,
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 13px 16px;
+
+    text-align: center;
+    font-size: 17px;
+    line-height: 1.2;
+    font-weight: 500;
+
+    border-radius: 10px;
+  }
+}
