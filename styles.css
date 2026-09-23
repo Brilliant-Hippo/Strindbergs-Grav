@@ -1231,3 +1231,139 @@ p {
   max-width: 100%;
   height: auto;
 }
+/* ===== STRINDBERGS HERO 2026 ===== */
+
+.hero {
+  min-height: 620px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 120px 8%;
+  position: relative;
+  color: #ffffff;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.52) 45%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  z-index: 0;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  display: block;
+  max-width: 720px;
+  padding: 0;
+  margin: 0;
+  background: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.hero-eyebrow {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #f5b400;
+}
+
+.hero-copy h1 {
+  margin: 0 0 22px;
+  font-size: clamp(44px, 5.5vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -2px;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.hero-copy p {
+  margin: 0 0 32px;
+  max-width: 620px;
+  font-size: 19px;
+  line-height: 1.6;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  margin: 0;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 24px;
+  border-radius: 8px;
+  background: #f5b400;
+  color: #111111;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+}
+
+.hero-secondary:hover {
+  background: #ffffff;
+  color: #111111;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    min-height: 560px;
+    padding: 100px 24px 70px;
+    align-items: flex-end;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(38px, 11vw, 52px);
+    letter-spacing: -1.5px;
+  }
+
+  .hero-copy p {
+    font-size: 17px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-cta,
+  .hero-secondary {
+    width: 100%;
+  }
+}
