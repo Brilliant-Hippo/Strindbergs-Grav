@@ -1527,7 +1527,6 @@ p {
     margin: 0 0 18px;
 
     font-size: 12px;
-
     text-align: center;
   }
 
@@ -1552,6 +1551,7 @@ p {
 
     font-size: 17px;
     line-height: 1.65;
+    font-weight: 400;
 
     text-align: left;
   }
@@ -1571,7 +1571,20 @@ p {
     width: 100%;
     min-height: 50px;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 14px;
+
+    background: #eceae4;
+    border-radius: 5px;
+
     font-size: 14px;
+    font-weight: 700;
+    color: #282828;
+
+    text-align: center;
   }
 
   .about-cta {
@@ -1586,8 +1599,10 @@ p {
     font-size: 16px;
   }
 }
+
+
 /* =========================================
-   OM OSS – DESKTOP FINAL FIX
+   OM OSS DESKTOP
 ========================================= */
 
 @media screen and (min-width: 801px) {
@@ -1620,7 +1635,6 @@ p {
     padding: 0 !important;
 
     display: block !important;
-    flex: none !important;
   }
 
   .about-media img {
@@ -1655,13 +1669,18 @@ p {
     flex-direction: column !important;
     justify-content: center !important;
     align-items: flex-start !important;
-
-    flex: none !important;
   }
 
   .about-eyebrow {
     width: auto !important;
+
     margin: 0 0 16px !important;
+
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.16em !important;
+
+    color: #d9a400 !important;
 
     text-align: left !important;
   }
@@ -1674,6 +1693,7 @@ p {
 
     font-size: clamp(40px, 3.4vw, 54px) !important;
     line-height: 1.04 !important;
+    letter-spacing: -0.04em !important;
 
     text-align: left !important;
   }
@@ -1686,6 +1706,7 @@ p {
 
     font-size: 17px !important;
     line-height: 1.65 !important;
+    font-weight: 400 !important;
 
     text-align: left !important;
   }
@@ -1704,17 +1725,29 @@ p {
   .about-points span {
     width: 100% !important;
     min-width: 0 !important;
+    min-height: 46px !important;
 
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+
+    padding: 10px 12px !important;
+
+    background: #eceae4 !important;
+    border-radius: 5px !important;
+
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #282828 !important;
 
     text-align: center !important;
   }
 
   .about-cta {
     align-self: flex-start !important;
+
     width: auto !important;
+
     margin: 0 !important;
   }
 }
