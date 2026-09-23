@@ -295,8 +295,8 @@ p {
 }
 
 .about-media {
-  flex: 1;
-  min-width: 260px;
+  flex: 1 1 0;
+  min-width: 0;
   padding-right: 10px;
   display: flex;
   align-items: stretch;
@@ -312,8 +312,8 @@ p {
 }
 
 .about-content {
-  flex: 1;
-  min-width: 260px;
+  flex: 1 1 0;
+  min-width: 0;
   padding-left: 10px;
   display: flex;
   flex-direction: column;
