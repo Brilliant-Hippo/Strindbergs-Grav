@@ -1586,3 +1586,135 @@ p {
     font-size: 16px;
   }
 }
+/* =========================================
+   OM OSS – DESKTOP FINAL FIX
+========================================= */
+
+@media screen and (min-width: 801px) {
+
+  .about {
+    box-sizing: border-box !important;
+
+    width: calc(100% - 64px) !important;
+    max-width: 1400px !important;
+
+    margin: 30px auto 70px !important;
+    padding: 0 !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 0 !important;
+
+    align-items: stretch !important;
+
+    background: #f5f3f1 !important;
+    border-radius: 28px !important;
+    overflow: hidden !important;
+  }
+
+  .about-media {
+    width: auto !important;
+    min-width: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: block !important;
+    flex: none !important;
+  }
+
+  .about-media img {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: 100% !important;
+    min-height: 680px !important;
+
+    object-fit: cover !important;
+    object-position: center !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border-radius: 0 !important;
+  }
+
+  .about-content {
+    box-sizing: border-box !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+
+    margin: 0 !important;
+    padding: 60px 52px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+
+    flex: none !important;
+  }
+
+  .about-eyebrow {
+    width: auto !important;
+    margin: 0 0 16px !important;
+
+    text-align: left !important;
+  }
+
+  .about-content h2 {
+    width: 100% !important;
+    max-width: 620px !important;
+
+    margin: 0 0 26px !important;
+
+    font-size: clamp(40px, 3.4vw, 54px) !important;
+    line-height: 1.04 !important;
+
+    text-align: left !important;
+  }
+
+  .about-content p {
+    width: 100% !important;
+    max-width: 620px !important;
+
+    margin: 0 0 20px !important;
+
+    font-size: 17px !important;
+    line-height: 1.65 !important;
+
+    text-align: left !important;
+  }
+
+  .about-points {
+    width: 100% !important;
+    max-width: 620px !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+
+    margin: 14px 0 32px !important;
+  }
+
+  .about-points span {
+    width: 100% !important;
+    min-width: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    text-align: center !important;
+  }
+
+  .about-cta {
+    align-self: flex-start !important;
+    width: auto !important;
+    margin: 0 !important;
+  }
+}
