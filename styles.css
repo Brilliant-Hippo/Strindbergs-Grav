@@ -1240,7 +1240,8 @@ p {
   align-items: center;
   justify-content: flex-start;
   text-align: left;
-  padding: 175px 8% 110px;  position: relative;
+  padding: 175px 8% 110px;  
+  position: relative;
   color: #ffffff;
 }
 
